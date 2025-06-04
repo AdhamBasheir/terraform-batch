@@ -1,0 +1,9 @@
+# binary files
+tf
+tf.exe
+terraform-batch-linux
+terraform-batch-macos
+terraform-batch-windows.exe
+
+# build script
+build.sh
