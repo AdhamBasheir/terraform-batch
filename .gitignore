@@ -7,3 +7,6 @@ terraform-batch-windows.exe
 
 # build script
 build.sh
+
+# todo file
+todo.txt
