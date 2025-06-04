@@ -23,11 +23,11 @@ CGO_ENABLED=0 go build -o <binary-name> .
 If you don’t add <binary-name> to your system’s PATH, you must run the tool from your Terraform root directory (the directory containing your Terraform configs) by specifying the relative or absolute path to the executable.
 
 ## 🛠️ Usage
-if in path
+if the binary is in the system's PATH
 ```bash
 <binary-name> <command> [directory1] [directory2] ...
 ```
-if not in path
+if the binary is not in the system's PATH
 ```bash
 ./<binary-name> <command> [directory1] [directory2] ...
 ```
@@ -44,14 +44,11 @@ if not in path
 ```
 terraform/
 ├── foo/
-│   └── main
-│       └── main.tf
+│   └── main.tf
 ├── bar/
-│   └── main
-│       └── main.tf
+│   └── main.tf
 ├── baz/
-│   └── main
-│       └── main.tf
+│   └── main.tf
 ```
 
 ## 📝 Notes
