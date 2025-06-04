@@ -8,6 +8,7 @@
 - Run `terraform apply` with auto-approval across directories
 - Run `terraform destroy` with auto-approval across directories
 - Validates directories contain a `main.tf` file before running commands
+- Executes each Terraform command sequentially across directories, one at a time
 - Simple, no-frills CLI ideal for local development and CI/CD pipelines
 - No dependencies besides the Terraform CLI
 
@@ -17,19 +18,19 @@ Download pre-built binaries from [Releases](https://github.com/AdhamBasheir/terr
 ```bash
 git clone https://github.com/AdhamBasheir/terraform-batch.git
 cd terraform-batch
-CGO_ENABLED=0 go build -o <binary-name> .
+CGO_ENABLED=0 go build -ldflags="-s -w" -o terraform-batch .
 ```
 ### ⚠️ Note:
-If you don’t add <binary-name> to your system’s PATH, you must run the tool from your Terraform root directory (the directory containing your Terraform configs) by specifying the relative or absolute path to the executable.
+> If you don’t add terraform-batch to your system’s PATH, you must run the tool from your Terraform root directory (the directory containing your Terraform configs) by specifying the relative or absolute path to the executable.
 
 ## 🛠️ Usage
 if the binary is in the system's PATH
 ```bash
-<binary-name> <command> [directory1] [directory2] ...
+terraform-batch <command> [directory1] [directory2] ...
 ```
 if the binary is not in the system's PATH
 ```bash
-./<binary-name> <command> [directory1] [directory2] ...
+./terraform-batch <command> [directory1] [directory2] ...
 ```
 ### commands
 | Command   | Description                                       |
