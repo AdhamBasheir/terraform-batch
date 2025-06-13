@@ -1,58 +1,62 @@
 # terraform-batch
-**A lightweight CLI tool to automate Terraform commands across multiple directories.**
+**A lightweight CLI wrapper for running Terraform commands across multiple directories.**
 
 ## ✨ Features
-
-- Run `terraform init` across directories
-- Run `terraform validate` across directories
-- Run `terraform apply` with auto-approval across directories
-- Run `terraform destroy` with auto-approval across directories
-- Validates directories contain a `main.tf` file before running commands
-- Executes each Terraform command sequentially across directories, one at a time
-- Simple, no-frills CLI ideal for local development and CI/CD pipelines
-- No dependencies besides the Terraform CLI
+- Simple, efficient CLI suited for local development and CI/CD automation
+- Execute any Terraform command (plan, apply, destroy, etc.)
+- Operate sequentially on one or more directories
+- Optional `-ignore-errors` mode to continue execution despite failures
+- Clean, colored terminal output
+- No dependencies beyond the Terraform CLI
 
 ## 📥 Installation
 Download pre-built binaries from [Releases](https://github.com/AdhamBasheir/terraform-batch/releases) or build from source:
-
+```bash
+go install github.com/AdhamBasheir/terraform-batch@latest
+```
+or
 ```bash
 git clone https://github.com/AdhamBasheir/terraform-batch.git
 cd terraform-batch
-CGO_ENABLED=0 go build -ldflags="-s -w" -o terraform-batch .
+CGO_ENABLED=0 go build -ldflags="-s -w" -trimpath -o terraform-batch .
 ```
-### ⚠️ Note:
-> If you don’t add terraform-batch to your system’s PATH, you must run the tool from your Terraform root directory (the directory containing your Terraform configs) by specifying the relative or absolute path to the executable.
+
+### ⚠️ **Note:**  
+> Using `go install` places the binary in your system’s `PATH`, allowing you to run it by simply typing `myapp` anywhere.  
+> If you clone the repository and build locally, the binary remains in the build directory, so you must execute it using its full or relative path (e.g., `/path/to/terraform-batch`).
+
 
 ## 🛠️ Usage
 if the binary is in the system's PATH
 ```bash
-terraform-batch <command> [directory1] [directory2] ...
+terraform-batch [flags] <terraform command>
 ```
-if the binary is not in the system's PATH
+
+## ✅ Examples
+Run terraform plan in the current directory:
 ```bash
-./terraform-batch <command> [directory1] [directory2] ...
-```
-### commands
-| Command   | Description                                       |
-| --------- | --------------------------------------------------|
-| `init`    | Initialize Terraform configurations               |
-| `validate`| Validate Terraform configurations                 |
-| `apply`   | Apply Terraform configurations (auto-approve)     |
-| `destroy` | Destroy Terraform configurations (auto-approve)   |
-| `help`    | Show help information                             |
-
-## 🗂️ Terraform Directory Structure
-```
-terraform/
-├── foo/
-│   └── main.tf
-├── bar/
-│   └── main.tf
-├── baz/
-│   └── main.tf
+terraform-batch plan
 ```
 
-## 📝 Notes
-- The tool requires Terraform CLI installed and available in your PATH.
-- Directories must contain a valid main.tf file.
-- Intended for developer use and automation scripts; avoids emojis or colors for CI compatibility.
+Run terraform apply in multiple directories:
+```bash
+terraform-batch -dir=dir1,dir2 apply
+```
+
+Ignore errors and continue execution:
+```bash
+terraform-batch -dir=dir1,dir2,dir3 -ignore-errors=true destroy
+```
+
+## ⚙️ Flags
+| Flag             | Description                                         |
+| ---------------- | --------------------------------------------------- |
+| `-dir`           | Comma-separated list of directories                 |
+| `-ignore-errors` | Continue even if a directory fails (default: false) |
+
+## 📌 Notes
+- Do not include the terraform keyword in your command. Just write the subcommand (e.g., `plan`, `apply`).
+
+## 🚀 Planned Features
+- Parallel execution with `-parallel`
+- Output logging per directory with `-log`
